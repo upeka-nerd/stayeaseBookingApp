@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Entity
 @Data
@@ -15,6 +17,8 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String roomType;
+    @Lob
+    private Blob photos;
     private BigDecimal roomPrice;
     private boolean isBooked=false;
 
@@ -24,6 +28,20 @@ public class Room {
 
     public  Room(){
         this.bookings=new ArrayList<>();
+    }
+
+    public void addBookinRoom(BookedRoom bookedRoom){
+        if(bookings==null){
+          bookings=new ArrayList<>();
+
+        }
+        bookings.add(bookedRoom);
+        bookedRoom.setRoom(this);
+        isBooked=true;
+        String bookingCode=new Random().nextInt(100)+"";
+        bookedRoom.setBookingConfirmationCode(bookingCode);
+
+
     }
 
 
