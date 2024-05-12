@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.List;
 
 
 @Service
@@ -34,5 +35,10 @@ public class RoomService implements IRoomService {
         }
 
         return roomRepo.save(room);
+    }
+
+    @Override
+    public List<String> getAllRoomTypes() {
+        return roomRepo.findDistinctRoomTypes();
     }
 }
